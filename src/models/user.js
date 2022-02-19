@@ -8,7 +8,8 @@ const loginSchema = new Schema({
     },
     email: {
         "type": String,
-        required: [true, "pls input first email"]
+        required: [true, "pls input first email"],
+        lowercase: true
     },
     password: {
         "type": String,

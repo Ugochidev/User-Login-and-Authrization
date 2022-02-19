@@ -7,4 +7,4 @@ router.get("/payment", passport.authenticate("jwt", {session: false}), (req, res
     res.send("You are total of : #2500")
 })
 
-module.exports = {router}
+module.exports = router

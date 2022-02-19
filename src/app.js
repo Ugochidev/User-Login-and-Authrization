@@ -1,31 +1,29 @@
-const express = require("express")
-const morgan = require("morgan")
-const helmet = require('helmet');
-const cors = require('cors');
-require("dotenv").config();
+const express = require("express");
+const mongoose = require("mongoose");
+const app = express();
+
+require("./database/index")
 require("./auth/passport");
 
-
-require("./model/users");
-
+require("./models/user");
 const middlewares = require("./middlewares");
 const api = require("./api");
-const morgan = require('morgan');
+const PORT = process.env.PORT;
 
-const app = express.json();
-
-app.use(morgan("dev"));
-app.use(helmet());
-app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res)=>{
-    res.json({
-        message: "You are on the rigth path!!!"
-    })
-})
+const connectDB = async ()=>{
+    try {
+        await mongoose.connect(process.env.DATA_URI)
+                console.log(`Database connected`)
+    } catch (error) {
+        console.log(`Database is not connected`)
+    }
+}
+connectDB()
 
 app.use("/api/v1", api);
 
-app.use(middlewares.notFound)
-app.use(middlewares.errorHandler)
+app.listen(PORT, ()=>{
+console.log(`App is now listening to port ${PORT}`);
+})

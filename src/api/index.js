@@ -1,12 +1,12 @@
 const express = require("express");
+const Router = express.Router();
+
 const registerApi = require("./register");
 const loginApi = require("./login");
 const paymentApi = require("./payment");
 
-const router = express.Router();
+Router.use(registerApi)
+Router.use(loginApi);
+Router.use(paymentApi);
 
-router.use(registerApi)
-router.use(loginApi);
-router.use(paymentApi);
-
-module.exports = {router};  
+module.exports = Router;
